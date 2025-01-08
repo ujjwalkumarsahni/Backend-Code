@@ -95,34 +95,42 @@ const registerUser = asyncHandler( async (req, res) => {
 
 } ) 
 
-const loginUser = asyncHandler( async (req, res) => {
-    // get user details from frontend  req body -> data
-    //username or email
-    // password check
-    // access token and refresh token
-    // send cookie
+const loginUser = asyncHandler(async (req, res) =>{
+    // req body -> data
+    // username or email
+    //find the user
+    //password check
+    //access and referesh token
+    //send cookie
 
-    const { username, email, password } = req.body 
+    const {email, username, password} = req.body
+    console.log(email);
 
-    if (!username || !password) {
-        throw new ApiError(400, "Username and password are required");
+    if (!username && !email) {
+        throw new ApiError(400, "username or email is required")
     }
+    
+    // Here is an alternative of above code based on logic discussed in video:
+    // if (!(username || email)) {
+    //     throw new ApiError(400, "username or email is required")
+        
+    // }
 
     const user = await User.findOne({
-        $or: [{ username }, { email }]
-    });
+        $or: [{username}, {email}]
+    })
 
-    if(!user) {
-        throw new ApiError(404, "User does not exist");
+    if (!user) {
+        throw new ApiError(404, "User does not exist")
     }
 
-    const isPasswordValid = await user.isPasswordCorrect(password)
+   const isPasswordValid = await user.isPasswordCorrect(password)
 
-    if (!isPasswordValid) {
-        throw new ApiError(401, "Invalid user credentials")
+   if (!isPasswordValid) {
+    throw new ApiError(401, "Invalid user credentials")
     }
 
-    const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(user._id)
+   const {accessToken, refreshToken} = await generateAccessAndRefereshTokens(user._id)
 
     const loggedInUser = await User.findById(user._id).select("-password -refreshToken")
 
@@ -171,5 +179,7 @@ const logoutUser = asyncHandler(async(req, res) => {
     .clearCookie("refreshToken", options)
     .json(new ApiResponse(200, {}, "User logged Out"))
 })
+
+
 
 export { registerUser,loginUser,logoutUser }; // Exporting the `registerUser` function so it can be used in other modules
