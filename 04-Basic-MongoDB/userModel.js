@@ -1,6 +1,7 @@
 const { default: mongoose } = require("mongoose");
+require('dotenv').config();
+const mongoURI = process.env.MONGO_URI;
 
-const mongoURI = 'mongodb://127.0.0.1:27017/myDatabase';
 mongoose.connect(mongoURI)
     .then(() => console.log('Connected to MongoDB'))
     .catch((err) => console.log('Error connecting to MongoDB:', err));
