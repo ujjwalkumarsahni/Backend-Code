@@ -36,7 +36,11 @@ I started this journey to deepen my understanding of backend development. Here's
 - **02-Connect-Backend-with-Frontend**: Projects connecting backend and frontend.  
 - **03-Data-Modelling**: Exploring database schema design.  
 - **04-Basic-MongoDB**: Getting started with MongoDB.  
-<!-- - **Backend-Project**: A complete backend project showcasing all concepts. -->
+- **05-CRUD-Operations-with-EJS**: Create basic app using Ejs and mongoose operations perform.  
+- **06-Authentication-Authorization-with-EJS**:  
+- **07-Data-Associations**:
+- **08-Multer**: file upload  
+- **Backend-Project**: A complete backend project showcasing all concepts.
 
 ---
 
